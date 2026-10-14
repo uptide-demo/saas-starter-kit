@@ -4,8 +4,10 @@ import { Role } from '@prisma/client';
 
 export const password = z
   .string({
-    required_error: 'Password is required',
-    invalid_type_error: 'Password must be a string',
+    error: (issue) =>
+      issue.input === undefined
+        ? 'Password is required'
+        : 'Password must be a string',
   })
   .max(
     maxLengthPolicies.password,
@@ -18,8 +20,10 @@ export const password = z
 
 export const email = z
   .string({
-    required_error: 'Email is required',
-    invalid_type_error: 'Email must be a string',
+    error: (issue) =>
+      issue.input === undefined
+        ? 'Email is required'
+        : 'Email must be a string',
   })
   .email('Enter a valid email address')
   .max(
@@ -29,8 +33,10 @@ export const email = z
 
 export const teamName = z
   .string({
-    required_error: 'Team name is required',
-    invalid_type_error: 'Team name must be a string',
+    error: (issue) =>
+      issue.input === undefined
+        ? 'Team name is required'
+        : 'Team name must be a string',
   })
   .min(1, 'Team Name is required')
   .max(
@@ -41,16 +47,18 @@ export const teamName = z
 export const name = (length: number = maxLengthPolicies.name) =>
   z
     .string({
-      required_error: 'Name is required',
-      invalid_type_error: 'Name must be a string',
+      error: (issue) =>
+        issue.input === undefined
+          ? 'Name is required'
+          : 'Name must be a string',
     })
     .min(1, 'Name is required')
     .max(length, `Name should have at most ${length} characters`);
 
 export const slug = z
   .string({
-    required_error: 'Slug is required',
-    invalid_type_error: 'Slug must be a string',
+    error: (issue) =>
+      issue.input === undefined ? 'Slug is required' : 'Slug must be a string',
   })
   .min(3, 'Slug must be at least 3 characters')
   .max(
@@ -60,8 +68,10 @@ export const slug = z
 
 export const image = z
   .string({
-    required_error: 'Avatar is required',
-    invalid_type_error: 'Avatar must be a string',
+    error: (issue) =>
+      issue.input === undefined
+        ? 'Avatar is required'
+        : 'Avatar must be a string',
   })
   .url('Enter a valid URL')
   .refine(
@@ -79,7 +89,8 @@ export const image = z
 
 export const domain = z
   .string({
-    invalid_type_error: 'Domain must be a string',
+    error: (issue) =>
+      issue.input === undefined ? 'Required' : 'Domain must be a string',
   })
   .max(
     maxLengthPolicies.domain,
@@ -108,32 +119,40 @@ export const domain = z
 
 export const apiKeyId = z
   .string({
-    required_error: 'API key is required',
-    invalid_type_error: 'API key must be a string',
+    error: (issue) =>
+      issue.input === undefined
+        ? 'API key is required'
+        : 'API key must be a string',
   })
   .min(1, 'API key is required');
 
 export const token = z
   .string({
-    required_error: 'Token is required',
-    invalid_type_error: 'Token must be a string',
+    error: (issue) =>
+      issue.input === undefined
+        ? 'Token is required'
+        : 'Token must be a string',
   })
   .min(1, 'Token is required');
 
 export const role = z.nativeEnum(Role, {
-  required_error: 'Role is required',
-  invalid_type_error: 'Role must be a string',
+  error: (issue) =>
+    issue.input === undefined ? 'Role is required' : 'Role must be a string',
 });
 
 export const sentViaEmail = z
   .boolean({
-    invalid_type_error: 'Sent via email must be a boolean',
+    error: (issue) =>
+      issue.input === undefined
+        ? 'Required'
+        : 'Sent via email must be a boolean',
   })
   .default(false);
 
 export const domains = z
   .string({
-    invalid_type_error: 'Domains must be a string',
+    error: (issue) =>
+      issue.input === undefined ? 'Required' : 'Domains must be a string',
   })
   .optional()
   .refine(
@@ -143,8 +162,10 @@ export const domains = z
 
 export const expiredToken = z
   .string({
-    required_error: 'Expired token is required',
-    invalid_type_error: 'Expired token must be a string',
+    error: (issue) =>
+      issue.input === undefined
+        ? 'Expired token is required'
+        : 'Expired token must be a string',
   })
   .min(1, 'Expired token is required')
   .max(
@@ -154,24 +175,30 @@ export const expiredToken = z
 
 export const sessionId = z
   .string({
-    required_error: 'Session id is required',
-    invalid_type_error: 'Session id must be a string',
+    error: (issue) =>
+      issue.input === undefined
+        ? 'Session id is required'
+        : 'Session id must be a string',
   })
   .min(1, 'Session id is required');
 
 export const priceId = z
   .string({
-    required_error: 'Price Id is required',
-    invalid_type_error: 'Price Id must be a string',
+    error: (issue) =>
+      issue.input === undefined
+        ? 'Price Id is required'
+        : 'Price Id must be a string',
   })
   .min(1, 'PriceId is required');
 
 export const quantity = z.number({
-  invalid_type_error: 'Quantity must be a number',
+  error: (issue) =>
+    issue.input === undefined ? 'Required' : 'Quantity must be a number',
 });
 
 export const recaptchaToken = z.string({
-  invalid_type_error: 'Recaptcha token must be a string',
+  error: (issue) =>
+    issue.input === undefined ? 'Required' : 'Recaptcha token must be a string',
 });
 
 export const sentViaEmailString = z
@@ -186,8 +213,10 @@ export const sentViaEmailString = z
 
 export const invitationId = z
   .string({
-    required_error: 'Invitation id is required',
-    invalid_type_error: 'Invitation id must be a string',
+    error: (issue) =>
+      issue.input === undefined
+        ? 'Invitation id is required'
+        : 'Invitation id must be a string',
   })
   .min(1, 'Invitation id is required')
   .max(
@@ -197,8 +226,10 @@ export const invitationId = z
 
 export const endpointId = z
   .string({
-    required_error: 'Endpoint id is required',
-    invalid_type_error: 'Endpoint id must be a string',
+    error: (issue) =>
+      issue.input === undefined
+        ? 'Endpoint id is required'
+        : 'Endpoint id must be a string',
   })
   .min(1, `Endpoint id is required`)
   .max(
@@ -210,8 +241,10 @@ export const eventTypes = z
   .array(
     z
       .string({
-        invalid_type_error: 'Event type must be a string',
-        required_error: 'Event type is required',
+        error: (issue) =>
+          issue.input === undefined
+            ? 'Event type is required'
+            : 'Event type must be a string',
       })
       .min(1)
       .max(
@@ -224,7 +257,8 @@ export const eventTypes = z
 
 export const url = z
   .string({
-    invalid_type_error: 'URL must be a string',
+    error: (issue) =>
+      issue.input === undefined ? 'Required' : 'URL must be a string',
   })
   .url('Enter a valid URL')
   .min(1, 'URL is required')
@@ -243,8 +277,10 @@ export const url = z
 
 export const inviteToken = z
   .string({
-    required_error: 'Invite token is required',
-    invalid_type_error: 'Invite token must be a string',
+    error: (issue) =>
+      issue.input === undefined
+        ? 'Invite token is required'
+        : 'Invite token must be a string',
   })
   .min(1, 'Invite token is required')
   .max(
@@ -254,8 +290,10 @@ export const inviteToken = z
 
 export const memberId = z
   .string({
-    required_error: 'Member id is required',
-    invalid_type_error: 'Member id must be a string',
+    error: (issue) =>
+      issue.input === undefined
+        ? 'Member id is required'
+        : 'Member id must be a string',
   })
   .min(1)
   .max(
